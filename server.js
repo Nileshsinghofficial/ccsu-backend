@@ -28,19 +28,17 @@ app.post('/get-result', async (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
+  if (!/^\d{6,9}$/.test(textrollnum)) {
+  return res.status(400).json({ error: 'Roll number must be a number up to 9 digits' });
+  }
+
+
   const url = 'https://result.ccsuniversity.ac.in/regpvt2013.php';
 
   try {
    const browser = await puppeteer.launch({
-    executablePath: process.env.CHROME_PATH || '/usr/bin/chromium-browser',
     headless: 'new',
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-gpu',
-      '--disable-dev-shm-usage',
-    ],
-    timeout: 60000
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'domcontentloaded' });
