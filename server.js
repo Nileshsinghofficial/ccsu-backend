@@ -31,7 +31,11 @@ app.post('/get-result', async (req, res) => {
   const url = 'https://result.ccsuniversity.ac.in/regpvt2013.php';
 
   try {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'domcontentloaded' });
 
