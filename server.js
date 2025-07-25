@@ -31,11 +31,17 @@ app.post('/get-result', async (req, res) => {
   const url = 'https://result.ccsuniversity.ac.in/regpvt2013.php';
 
   try {
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-
+   const browser = await puppeteer.launch({
+    executablePath: process.env.CHROME_PATH || '/usr/bin/chromium-browser',
+    headless: 'new',
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-gpu',
+      '--disable-dev-shm-usage',
+    ],
+    timeout: 60000
+  });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'domcontentloaded' });
 
