@@ -28,7 +28,7 @@ app.post('/get-result', async (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  if (!/^\d{6,9}$/.test(textrollnum)) {
+  if (!/^\d{1,9}$/.test(textrollnum)) {
   return res.status(400).json({ error: 'Roll number must be a number up to 9 digits' });
   }
 
